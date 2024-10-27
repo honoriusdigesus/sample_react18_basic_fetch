@@ -1,28 +1,40 @@
-import './App.scss'
-import Title from "./components/Title.tsx";
-import Button from "./components/Button.tsx";
-import {useEffect, useState} from "react";
+import {
+    Link,
+    Outlet,
+    Route,
+    BrowserRouter as Router,
+    Routes,
+} from "react-router-dom";
+import "./App.scss";
+import Characters from "./pages/Characters.tsx";
+import Home from "./pages/Home.tsx";
 
 function App() {
-
-    const [count, setCount] = useState(0); //UseState es un hook que permite manejar el estado de un componente funcional
-    console.log(count);
-
-    useEffect(() => { //UseEffect es un hook que permite ejecutar código en un componente funcional cuando se monta, desmonta o actualiza
-        console.log("UseEffect is working when count changes");
-    }, [count]);
-
-
-    return (<>
-
-        <Title myText={`El múmero de clics son: ${count}`}/>
-        <Button onClick={()=>setCount(count+1)} text="+ 1" />
-
-        {/*<Title myText="Este es el texto del componente 1"/>*/}
-        {/*<Title myText="Este es el texto del componente 2"/>*/}
-
-
-    </>)
+  return (
+    <>
+      <h1>Routers</h1>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/characters" element={<Characters />} />
+          </Route>
+        </Routes>
+      </Router>
+    </>
+  );
 }
 
-export default App
+function Layout() {
+  return (
+    <>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/characters">Characters</Link>
+      </nav>
+      <Outlet></Outlet>
+    </>
+  );
+}
+
+export default App;
